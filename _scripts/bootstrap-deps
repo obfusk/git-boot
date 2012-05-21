@@ -5,7 +5,7 @@
 while read name url; do
   echo "bootstrapping $name ..."
 
-  if [ ! -e _deps/"$name" ];
+  if [ ! -e _deps/"$name" ]; then
     echo "$name" >> _deps/_update
 
     git clone "$url" _deps/"$name"
