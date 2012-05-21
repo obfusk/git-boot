@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# TODO: remote name, branches
+
+for name in $( cat _deps/_update ); do
+  echo "updating $name ..."
+
+  pushd _deps/"$name"
+
+  for branch in $( git branch | sed 's!^..!!' ); do
+    echo "pulling branch $branch ..."
+
+    git checkout "$branch"
+    git pull origin "$branch"
+
+    echo 'done.'
+  done
+
+  popd
+
+  echo 'done.'
+done
+
+# --

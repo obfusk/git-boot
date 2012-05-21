@@ -1,0 +1,17 @@
+#!/bin/bash
+
+[ -d _deps ] || mkdir _deps
+
+while read name url; do
+  echo "bootstrapping $name ..."
+
+  if [ ! -e _deps/"$name" ];
+    echo "$name" >> _deps/_update
+
+    git clone "$url" _deps/"$name"
+  else
+    echo 'exists; skipping'
+  fi
+done < _depsources
+
+# --
