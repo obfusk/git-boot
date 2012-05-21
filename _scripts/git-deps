@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# TODO: list
+
+for name in $( cat _deps/_update ); do
+  echo "==> $name <=="
+
+  pushd _deps/"$name"
+    git "$@"
+  popd
+
+  echo
+done
+
+# --
