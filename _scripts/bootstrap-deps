@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function die () { echo "error: $1" > &2; exit 1; }
+function die () { echo "error: $1" >&2; exit 1; }
 
 [ -d _deps ] || mkdir _deps || die 'failed to mkdir _deps'
 

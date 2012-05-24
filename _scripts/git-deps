@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function die () { echo "error: $1" > &2; exit 1; }
+function die () { echo "error: $1" >&2; exit 1; }
 
 if [ -n "$GIT_DEPS_DIRS" ]; then
   ds=( $GIT_DEPS_DIRS )

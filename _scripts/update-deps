@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function die () { echo "error: $1" > &2; exit 1; }
+function die () { echo "error: $1" >&2; exit 1; }
 
 if [ -n "$UPDATE_DEPS_DIRS" ]; then
   ds=( $UPDATE_DEPS_DIRS )
