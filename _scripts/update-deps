@@ -1,21 +1,18 @@
 #!/bin/bash
 
-# TODO: remote name, branches
+function die () { echo "error: $1" > &2; exit 1; }
 
-for name in $( cat _deps/_update ); do
+if [ -n "$UPDATE_DEPS_DIRS" ]; then
+  ds=( $UPDATE_DEPS_DIRS )
+else
+  ds=( $( cat _deps/_update ) )
+fi
+
+for name in "${ds[@]}"; do
   echo "updating $name ..."
-
-  pushd _deps/"$name"
-    for branch in $( git branch | sed 's!^..!!' ); do
-      echo "pulling branch $branch ..."
-
-      git checkout "$branch"
-      git pull origin "$branch"
-
-      echo 'done.'
-    done
-  popd
-
+  pushd _deps/"$name" > /dev/null || die "could not pushd _deps/$name"
+    git pull
+  popd > /dev/null
   echo 'done.'
 done
 

@@ -1,6 +1,8 @@
 #!/bin/bash
 
-[ -d _deps ] || mkdir _deps
+function die () { echo "error: $1" > &2; exit 1; }
+
+[ -d _deps ] || mkdir _deps || die 'failed to mkdir _deps'
 
 while read name url; do
   echo "bootstrapping $name ..."
@@ -10,7 +12,7 @@ while read name url; do
 
     git clone "$url" _deps/"$name"
   else
-    echo 'exists; skipping'
+    echo 'exists; skipping.'
   fi
 done < _depsources
 
