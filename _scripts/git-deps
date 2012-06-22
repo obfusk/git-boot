@@ -4,6 +4,10 @@ function die () { echo "error: $1" >&2; exit 1; }
 
 if [ -n "$GIT_DEPS_DIRS" ]; then
   ds=( $GIT_DEPS_DIRS )
+elif [ "$1" == ALL ]; then
+  ds=( $( ls _deps | grep -v '^_' ) ) ; shift
+elif [ "$1" == STDIN ]; then
+  ds=() ; shift ; while read -r; do ds+=( "$REPLY" ); done
 else
   ds=( $( cat _deps/_update ) )
 fi
