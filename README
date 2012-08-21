@@ -26,8 +26,7 @@ Version     : v0.0.2
 
 === Usage ===                                                     {{{1
 
-  Get it at https://github.com/noxqsgit/git-boot,
-            https://github.com/obfusk/git-boot.
+  Get it at https://github.com/obfusk/git-boot.
 
   The _depsources file contains names and urls for the
   subrepositories.  For example:
