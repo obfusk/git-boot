@@ -1,23 +1,16 @@
 #!/bin/bash
 
-function die () { echo "error: $1" >&2; exit 1; }
+what="$1"; shift
 
-if [ -n "$GIT_DEPS_DIRS" ]; then
-  ds=( $GIT_DEPS_DIRS )
-elif [ "$1" == ALL ]; then
-  ds=( $( ls _deps | grep -v '^_' ) ) ; shift
-elif [ "$1" == STDIN ]; then
-  ds=() ; shift ; while read -r; do ds+=( "$REPLY" ); done
+if [ "$what" == ALL ]; then
+  ds=( $( ls _deps | grep -v '^_' | sed 's!^!_deps/!' ) )
+elif [ "$what" == UPD ]; then
+  ds=( $( cat _deps/_update | sed 's!^!_deps/!' ) )
 else
-  ds=( $( cat _deps/_update ) )
+  echo 'usage: git-deps { ALL | UPD } <git-cmd>' >&2
+  exit 1
 fi
 
-for name in "${ds[@]}"; do
-  echo "==> $name <=="
-  pushd _deps/"$name" > /dev/null || die "could not pushd _deps/$name"
-    git "$@"
-  popd > /dev/null
-  echo
-done
+mgit DS "${ds[@]}" END "$@"
 
 # --
