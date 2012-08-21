@@ -2,36 +2,62 @@
 
 File        : README
 Maintainer  : Felix C. Stegerman <flx@obfusk.net>
-Date        : 2012-05-24
+Date        : 2012-08-21
 
 Copyright   : Copyright (C) 2012  Felix C. Stegerman
-Version     : v0.0.1
+Version     : v0.0.2
 
 --                                                                }}}1
 
 === Description ===                                               {{{1
 
-  git-boot
+  git-boot - git meta-projects
 
   A meta-project approach to bootstrapping and updating git
   subprojects/dependencies.
 
+  NB: subprojects/dependencies in _deps ARE NOT STORED in the
+  meta-project repository; they are git repositories themselves, so
+  any changes must be commited within these subrepositories
+  themselves, and it is recommended you push them to a remote as well.
+
   ...                                                             TODO
+                                                                  }}}1
+
+=== Usage ===                                                     {{{1
+
+  Get it at https://github.com/noxqsgit/git-boot,
+            https://github.com/obfusk/git-boot.
+
+  The _depsources file contains names and urls for the
+  subrepositories.  For example:
+
+  $ vim _depsources
+    # foo   /path/or/url/to/foo.git
+    # bar   /path/or/url/to/bar.git
+    # baz   /path/or/url/to/baz.git
+
+
+  === ./scripts/... ===
+
+    bootstrap-deps
+      Bootstraps all dependencies from the _depsources file; if the
+      dir exists, it is skipped; if not, the repository is cloned as
+      _deps/<name> and the name is added to _deps/_update.
+
+    update-deps [<dep(s)>]
+      With no arguments, updates all dependencies in _deps/update;
+      with arguments, updates _deps/<dep(s)>.
+
+    git-deps { ALL | UPD } <git-cmd>
+      Runs the git command (e.g. >> status <<).  With ALL, runs it in
+      _deps/[^_]*; with UPD, runs it in _deps/$( cat _deps/_update ).
+      Uses mgit [3].
                                                                   }}}1
 
 === License ===                                                   {{{1
 
   GPLv2 [1] or EPLv1 [2].
-                                                                  }}}1
-
-=== Usage ===                                                     {{{1
-
-  Get it at https://github.com/{noxqsgit,obfusk}/git-boot.        TODO
-
-  $ vim _depsources
-  $ ./_scripts/...
-
-  ...                                                             TODO
                                                                   }}}1
 
 === References ===                                                {{{1
@@ -41,6 +67,9 @@ Version     : v0.0.1
 
   [2] Eclipse Public License, version 1
       http://www.opensource.org/licenses/EPL-1.0
+
+  [3] mgit
+      https://github.com/obfusk/mgit
                                                                   }}}1
 
 --
