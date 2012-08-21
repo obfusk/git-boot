@@ -2,16 +2,16 @@
 
 function die () { echo "error: $1" >&2; exit 1; }
 
-if [ -n "$UPDATE_DEPS_DIRS" ]; then
-  ds=( $UPDATE_DEPS_DIRS )
-else
+if [ "$#" -eq 0 ]; then
   ds=( $( cat _deps/_update ) )
+else
+  ds=( "$@" )
 fi
 
 for name in "${ds[@]}"; do
   echo "updating $name ..."
   pushd _deps/"$name" > /dev/null || die "could not pushd _deps/$name"
-    git pull
+    git pull origin master
   popd > /dev/null
   echo 'done.'
 done
